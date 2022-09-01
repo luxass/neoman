@@ -39,7 +39,7 @@ export class NeomanEnvironment {
     }
 
     const copy = (templatePath: string, destinationPath: string, ctx?: Record<string, unknown>) => {
-      const template = readFileSync(templatePath, 'utf8');
+      const template = readFileSync(path.resolve(source, templatePath), 'utf8');
       if (!ctx) {
         // return copyFileSync(templatePath, destinationPath);
         return writeFileSync(destinationPath, template);
