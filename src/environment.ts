@@ -3,23 +3,26 @@ import { Options as SpawnOptions, execa } from 'execa';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path, { isAbsolute } from 'node:path';
 
-import { Namespace, NeomanContext, NeomanGenerator } from './types';
+import { Namespace, NeomanGeneratorFn } from './types';
 import { deepMerge } from './utils';
 
 export class NeomanEnvironment {
-  public readonly store = new Map<Namespace, (options: NeomanContext) => NeomanGenerator>();
-  private readonly context: NeomanContext;
+  public readonly store = new Map<Namespace, NeomanGeneratorFn<any>>();
+  private readonly context: Record<string, unknown>;
 
-  constructor(context: NeomanContext) {
+  constructor(context: Record<string, unknown>) {
     this.context = context;
   }
 
-  register(namespace: Namespace, generator: (options: NeomanContext) => NeomanGenerator) {
+  register<T extends Record<string, unknown>>(
+    namespace: Namespace,
+    generator: NeomanGeneratorFn<T>
+  ) {
     if (this.store.has(namespace)) return;
     this.store.set(namespace, generator);
   }
 
-  run(namespace: string, options?: NeomanContext) {
+  run(namespace: string, options?: Record<string, unknown>) {
     const generatorFn = this.store.get(namespace);
     if (!generatorFn) throw new Error(`Generator ${namespace} not found`);
 
@@ -35,7 +38,7 @@ export class NeomanEnvironment {
       });
     }
 
-    const copy = (templatePath: string, destinationPath: string, ctx?: NeomanContext) => {
+    const copy = (templatePath: string, destinationPath: string, ctx?: Record<string, unknown>) => {
       const template = readFileSync(templatePath, 'utf8');
       if (!ctx) {
         // return copyFileSync(templatePath, destinationPath);

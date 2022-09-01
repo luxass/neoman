@@ -1,11 +1,10 @@
 import { NeomanEnvironment } from './environment';
-import { NeomanContext } from './types';
 
 export { NeomanGenerator } from './types';
 
-export const createEnvironment = (context?: NeomanContext) => {
+export const createEnvironment = (context?: Record<string, unknown>) => {
   const env = new NeomanEnvironment(context || {});
   return env;
 };
 
-export { NeomanEnvironment, NeomanContext };
+export { NeomanEnvironment };
