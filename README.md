@@ -1,3 +1,3 @@
 # Neoman
 
-> A simple alternative to yeoman-generator
+> A very small yeoman alternative - built for [Zotera](https://github.com/zotera/zotera)
