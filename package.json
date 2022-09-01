@@ -1,6 +1,6 @@
 {
-  "name": "neoman",
-  "version": "0.1.7",
+  "name": "@luxass/neoman",
+  "version": "0.1.0",
   "description": "",
   "type": "module",
   "main": "./dist/index.js",
@@ -21,7 +21,10 @@
     "lint": "eslint --cache {src,test}/**/*.ts",
     "test": "vitest"
   },
-  "keywords": [],
+  "keywords": [
+    "scaffold",
+    "generate"
+  ],
   "author": {
     "name": "Lucas Norgaard",
     "email": "lucasnrgaard@gmail.com",

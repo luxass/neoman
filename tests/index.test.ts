@@ -31,6 +31,7 @@ describe('index', () => {
       name: 'world'
     });
 
+    // How should we test this?
     expect(true).toBe(true);
   });
 
@@ -44,6 +45,7 @@ describe('index', () => {
         return `"${dep}": "*"`;
       }
     });
+    // How should we test this?
     expect(true).toBe(true);
   });
 });
