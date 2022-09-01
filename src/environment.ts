@@ -1,6 +1,6 @@
 import EJS from 'ejs';
 import { Options as SpawnOptions, execa } from 'execa';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path, { isAbsolute } from 'node:path';
 
 import { Namespace, NeomanContext, NeomanGenerator } from './types';
@@ -36,11 +36,11 @@ export class NeomanEnvironment {
     }
 
     const copy = (templatePath: string, destinationPath: string, ctx?: NeomanContext) => {
-      if (!ctx) {
-        return copyFileSync(templatePath, destinationPath);
-      }
-
       const template = readFileSync(templatePath, 'utf8');
+      if (!ctx) {
+        // return copyFileSync(templatePath, destinationPath);
+        return writeFileSync(destinationPath, template);
+      }
 
       const rendered = EJS.render(template, ctx);
       writeFileSync(destinationPath, rendered);

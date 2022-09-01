@@ -1,9 +1,7 @@
 import { ExecaChildProcess, Options as SpawnOptions } from 'execa';
 
 export type Namespace = string;
-export interface NeomanContext {
-  [key: string]: any;
-}
+export type NeomanContext = Record<string, unknown>;
 export interface NeomanGenerator {
   destinationRoot: string;
   sourceRoot: string;
