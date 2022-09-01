@@ -13,10 +13,13 @@
     "vitest": "*",
     "esbuild": "*"
   },
-  "keywords": ["zotera-plugin", "zotera"],
+  "keywords": [
+    "zotera-plugin",
+    "zotera"
+  ],
   "scripts": {
-    "dev":  "esbuild src/plugin.ts --external:@zotera/types --outdir=dist --bundle --format=esm --out-extension:.js=.js --watch" ,
-    "build":  "esbuild src/plugin.ts --external:@zotera/types --outdir=dist --bundle --format=esm --out-extension:.js=.js" ,
-    "test": "vitest run" 
+    "dev": "esbuild src/plugin.ts --external:@zotera/types --outdir=dist --bundle --format=esm --out-extension:.js=.js --watch",
+    "build": "esbuild src/plugin.ts --external:@zotera/types --outdir=dist --bundle --format=esm --out-extension:.js=.js",
+    "test": "vitest run"
   }
 }

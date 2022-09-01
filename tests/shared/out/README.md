@@ -1,4 +1,3 @@
 ## Hello world
 
-
-  This is a epic story
+This is a epic story
