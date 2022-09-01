@@ -1,6 +1,8 @@
 import { NeomanGenerator } from '../../src';
 
-export default function HelloGenerator(ctx: any): NeomanGenerator {
+export default function HelloGenerator(ctx?: {
+
+}): NeomanGenerator {
   return {
     sourceRoot: './tests/shared',
     destinationRoot: './tests/shared/out',

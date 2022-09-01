@@ -7,14 +7,14 @@ import { Namespace, NeomanContext, NeomanGenerator } from './types';
 import { deepMerge } from './utils';
 
 export class NeomanEnvironment {
-  public readonly store = new Map<Namespace, (options?: NeomanContext) => NeomanGenerator>();
+  public readonly store = new Map<Namespace, (options: NeomanContext) => NeomanGenerator>();
   private readonly context: NeomanContext;
 
   constructor(context: NeomanContext) {
     this.context = context;
   }
 
-  register(namespace: Namespace, generator: (options?: NeomanContext) => NeomanGenerator) {
+  register(namespace: Namespace, generator: (options: NeomanContext) => NeomanGenerator) {
     if (this.store.has(namespace)) return;
     this.store.set(namespace, generator);
   }
