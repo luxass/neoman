@@ -1,3 +1,4 @@
+import { writeFileSync } from "fs";
 import { beforeAll, describe, expect, it } from 'vitest';
 
 import { NeomanEnvironment, createEnvironment } from '../src';

@@ -39,14 +39,15 @@ export class NeomanEnvironment {
     }
 
     const copy = (templatePath: string, destinationPath: string, ctx?: Record<string, unknown>) => {
-      const template = readFileSync(path.resolve(source, templatePath), 'utf8');
-      if (!ctx) {
-        // return copyFileSync(templatePath, destinationPath);
-        return writeFileSync(destinationPath, template);
+      let template = readFileSync(path.resolve(source, templatePath), 'utf8');
+      const pathDirname = path.dirname(destinationPath);
+      if (!existsSync(pathDirname)) {
+        mkdirSync(pathDirname, { recursive: true });
       }
-
-      const rendered = EJS.render(template, ctx);
-      writeFileSync(destinationPath, rendered);
+      if (ctx) {
+        template = EJS.render(template, ctx);
+      }
+      writeFileSync(destinationPath, template);
     };
 
     const templatePath = (...dest: string[]) => {
