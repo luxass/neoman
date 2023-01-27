@@ -1,17 +1,37 @@
 {
   "name": "@luxass/neoman",
+  "type": "module",
   "version": "0.1.6",
   "description": "",
-  "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "author": {
+    "name": "Lucas Norgaard",
+    "email": "lucasnrgaard@gmail.com",
+    "url": "https://luxass.dev"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/luxass/neoman",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luxass/neoman"
+  },
+  "bugs": {
+    "url": "https://github.com/luxass/neoman/issues"
+  },
+  "keywords": [
+    "scaffold",
+    "generate"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
       "import": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -21,29 +41,19 @@
     "lint": "eslint --cache {src,tests}/**/*.ts",
     "test": "vitest"
   },
-  "keywords": [
-    "scaffold",
-    "generate"
-  ],
-  "author": {
-    "name": "Lucas Norgaard",
-    "email": "lucasnrgaard@gmail.com",
-    "url": "https://luxass.dev"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "@luxass/eslint-config": "^1.0.7",
-    "@luxass/prettier-config": "^1.0.4",
-    "@types/ejs": "^3.1.1",
-    "@types/node": "^18.7.13",
-    "eslint": "^8.23.0",
-    "prettier": "^2.7.1",
-    "tsup": "^6.2.3",
-    "typescript": "^4.8.2",
-    "vitest": "^0.22.1"
-  },
   "dependencies": {
     "ejs": "^3.1.8",
     "execa": "^6.1.0"
+  },
+  "devDependencies": {
+    "@luxass/eslint-config": "^2.2.6",
+    "@luxass/prettier-config": "^1.1.4",
+    "@types/ejs": "^3.1.1",
+    "@types/node": "^18.11.18",
+    "eslint": "^8.32.0",
+    "prettier": "^2.8.3",
+    "tsup": "^6.5.0",
+    "typescript": "^4.9.4",
+    "vitest": "^0.28.2"
   }
 }

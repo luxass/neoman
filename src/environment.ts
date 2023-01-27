@@ -1,10 +1,18 @@
-import EJS from 'ejs';
-import { Options as SpawnOptions, execa } from 'execa';
-import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
-import path, { isAbsolute } from 'node:path';
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  statSync,
+  writeFileSync
+} from "node:fs";
+import path, { isAbsolute } from "node:path";
 
-import { Namespace, NeomanGeneratorFn } from './types';
-import { deepMerge } from './utils';
+import EJS from "ejs";
+import { execa } from "execa";
+import type { Options as SpawnOptions } from "execa";
+import type { Namespace, NeomanGeneratorFn } from "./types";
+import { deepMerge } from "./utils";
 
 export class NeomanEnvironment {
   public readonly store = new Map<Namespace, NeomanGeneratorFn<any>>();
@@ -38,16 +46,24 @@ export class NeomanEnvironment {
       });
     }
 
-    const copy = (templatePath: string, destinationPath: string, ctx?: Record<string, unknown>) => {
+    const copy = (
+      templatePath: string,
+      destinationPath: string,
+      ctx?: Record<string, unknown>
+    ) => {
       // TODO: this will need a rewrite.
       if (statSync(templatePath).isDirectory()) {
         const files = readdirSync(templatePath);
         files.forEach((file) => {
-          copy(path.join(templatePath, file), path.join(destinationPath, file), ctx);
+          copy(
+            path.join(templatePath, file),
+            path.join(destinationPath, file),
+            ctx
+          );
         });
         return;
       }
-      let template = readFileSync(path.resolve(source, templatePath), 'utf8');
+      let template = readFileSync(path.resolve(source, templatePath), "utf8");
       const pathDirname = path.dirname(destinationPath);
       if (!existsSync(pathDirname)) {
         mkdirSync(pathDirname, { recursive: true });
@@ -76,16 +92,19 @@ export class NeomanEnvironment {
 
     const _spawn = (command: string, args: string[], opts?: SpawnOptions) => {
       return execa(command, args, {
-        stdio: 'inherit',
+        stdio: "inherit",
         cwd: destination,
         ...opts
       });
     };
 
-    const installDependencies = (pkgManager: 'npm' | 'yarn' | 'pnpm', deps: string[]) => {
-      let install = 'add';
-      if (pkgManager === 'npm') {
-        install = 'install';
+    const installDependencies = (
+      pkgManager: "npm" | "yarn" | "pnpm",
+      deps: string[]
+    ) => {
+      let install = "add";
+      if (pkgManager === "npm") {
+        install = "install";
       }
       _spawn(pkgManager, [install, ...deps]);
     };

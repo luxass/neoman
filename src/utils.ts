@@ -1,5 +1,5 @@
 function isObject(item: unknown): boolean {
-  return item != null && typeof item === 'object' && !Array.isArray(item);
+  return item != null && typeof item === "object" && !Array.isArray(item);
 }
 
 export function deepMerge<T extends object = object, S extends object = T>(
@@ -28,7 +28,9 @@ export function deepMerge<T extends object = object, S extends object = T>(
   return deepMerge(target, ...sources);
 }
 
-export type MergeInsertions<T> = T extends object ? { [K in keyof T]: MergeInsertions<T[K]> } : T;
+export type MergeInsertions<T> = T extends object
+  ? { [K in keyof T]: MergeInsertions<T[K]> }
+  : T;
 
 export type DeepMerge<F, S> = MergeInsertions<{
   [K in keyof F | keyof S]: K extends keyof S & keyof F
