@@ -18,7 +18,7 @@ const neomanEnv = createEnvironment({
   name: "Neoman"
 });
 
-function neomanGenerator(ctx: any): NeomanGenerator {
+function projectGenerator(ctx: any): NeomanGenerator {
   return {
     sourceRoot: "./tests/shared",
     destinationRoot: "./tests/shared/out",
@@ -30,7 +30,7 @@ function neomanGenerator(ctx: any): NeomanGenerator {
 }
 
 // Register the generator
-neomanEnv.register("neoman-namespace", neomanGenerator);
+neomanEnv.register("neoman-namespace", projectGenerator);
 
 neomanEnv.run("neoman-namespace"); // without additional context
 neomanEnv.run("neoman-namespace", { version: "v1.0.0" }); // with additional context

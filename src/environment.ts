@@ -1,8 +1,8 @@
 import {
   existsSync,
   mkdirSync,
-  readdirSync,
   readFileSync,
+  readdirSync,
   statSync,
   writeFileSync
 } from "node:fs";
@@ -11,6 +11,7 @@ import path, { isAbsolute } from "node:path";
 import EJS from "ejs";
 import { execa } from "execa";
 import type { Options as SpawnOptions } from "execa";
+
 import type { Namespace, NeomanGeneratorFn } from "./types";
 import { deepMerge } from "./utils";
 
