@@ -84,7 +84,7 @@ export class NeomanEnvironment<
     await generator.run({
       options: generatorCtx,
       copy: async (filePath: string, destinationPath: string) =>
-        copy({
+        await copy({
           filePath,
           destinationPath,
           destinationRoot,
@@ -95,7 +95,7 @@ export class NeomanEnvironment<
         destinationPath: string,
         ctx: Record<string, unknown>
       ) =>
-        copyTpl({
+        await copyTpl({
           filePath,
           destinationPath,
           ctx: deepMerge(generatorCtx, ctx),

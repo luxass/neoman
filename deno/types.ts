@@ -1,4 +1,4 @@
-import type EJS from "ejs";
+import EJS from "https://esm.sh/ejs@3.1.8";
 
 export interface NeomanGenerator<T extends Record<string, unknown>> {
   destinationRoot: string;

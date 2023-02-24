@@ -6,7 +6,7 @@ import {
   readdirSync,
   statSync,
   writeFileSync
-} from "node:fs";
+} from "https://deno.land/std@0.178.0/fs/mod.ts";
 import {
   cp,
   mkdir,
@@ -14,10 +14,10 @@ import {
   readdir,
   stat,
   writeFile
-} from "node:fs/promises";
-import { dirname, isAbsolute, join, resolve } from "node:path";
+} from "https://deno.land/std@0.178.0/fs/mod.ts";
+import { dirname, isAbsolute, join, resolve } from "https://deno.land/std@0.178.0/path/mod.ts";
 
-import EJS from "ejs";
+import EJS from "https://esm.sh/ejs@3.1.8";
 
 import type { NeomanGenerator } from "./types.ts";
 import { deepMerge } from "./utils.ts";
@@ -84,7 +84,7 @@ export class NeomanEnvironment<
     await generator.run({
       options: generatorCtx,
       copy: async (filePath: string, destinationPath: string) =>
-        copy({
+        await copy({
           filePath,
           destinationPath,
           destinationRoot,
@@ -95,7 +95,7 @@ export class NeomanEnvironment<
         destinationPath: string,
         ctx: Record<string, unknown>
       ) =>
-        copyTpl({
+        await copyTpl({
           filePath,
           destinationPath,
           ctx: deepMerge(generatorCtx, ctx),
