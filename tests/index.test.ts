@@ -1,52 +1,87 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { readdir } from "fs/promises";
+import { join } from "node:path";
 
-import type { NeomanEnvironment } from "../src";
+import { afterAll, expect, test } from "vitest";
+
 import { createEnvironment } from "../src";
-import HelloGenerator from "./generators/hello";
-import WorldGenerator from "./generators/world";
+import { CopyGenerator } from "./generators/copy-gen";
 
-enum Namespaces {
-  Hello = "neoman:hello",
-  World = "neoman:world"
+async function readDir(dir: string): Promise<string[]> {
+  const dirents = await readdir(dir, { withFileTypes: true });
+  const files = await Promise.all(
+    dirents.map((dirent) => {
+      const resolved = join(dir, dirent.name);
+      return dirent.isDirectory() ? readDir(resolved) : resolved;
+    })
+  );
+  return files.flat(1);
 }
 
-let neomanEnv: NeomanEnvironment;
-
-beforeAll(() => {
-  neomanEnv = createEnvironment({
-    global: "epic"
-  });
+afterAll(() => {
+  console.log("afterAll");
 });
 
-describe("index", () => {
-  it("setup generators", () => {
-    neomanEnv.register(Namespaces.Hello, HelloGenerator);
-    neomanEnv.register(Namespaces.World, WorldGenerator);
-    expect(neomanEnv.store.size).toBe(2);
-    expect(neomanEnv.store.has(Namespaces.Hello)).toBe(true);
-    expect(neomanEnv.store.has(Namespaces.World)).toBe(true);
-  });
-
-  it("run hello generator", () => {
-    neomanEnv.run(Namespaces.Hello, {
-      name: "world"
-    });
-
-    // How should we test this?
-    expect(true).toBe(true);
-  });
-
-  it("run world generator", () => {
-    neomanEnv.run(Namespaces.World, {
-      name: "zotera-plugin",
-      description: "zotera-plugin description",
-      vitest: true,
-      esbuild: true,
-      dep: (dep: string) => {
-        return `"${dep}": "*"`;
+test("should register a generator", () => {
+  const env = createEnvironment({
+    generators: {
+      "neoman:myfirstgen": {
+        sourceRoot: "templates",
+        destinationRoot: "output",
+        run: () => {}
       }
-    });
-    // How should we test this?
-    expect(true).toBe(true);
+    }
   });
+
+  expect(Object.keys(env.generators)).toHaveLength(1);
+});
+
+test("throw error if namespace already exists", () => {
+  const env = createEnvironment({
+    generators: {
+      "neoman:myfirstgen": CopyGenerator()
+    }
+  });
+
+  expect(Object.keys(env.generators)).toHaveLength(1);
+
+  expect(() => env.register("neoman:myfirstgen", CopyGenerator())).toThrowError(
+    "Generator neoman:myfirstgen already exists"
+  );
+});
+
+test("throw error if generator is not registered", async () => {
+  const env = createEnvironment();
+
+  expect(Object.keys(env.generators)).toHaveLength(0);
+
+  await expect(env.run("neoman:myfirstgen")).rejects.toThrowError(
+    "Generator neoman:myfirstgen not registered"
+  );
+});
+
+test("run a generator", async () => {
+  const env = createEnvironment({
+    generators: {
+      "neoman:myfirstgen": CopyGenerator()
+    },
+    context: {
+      global: "global"
+    }
+  });
+
+  expect(Object.keys(env.generators)).toHaveLength(1);
+
+  await env.run("neoman:myfirstgen");
+
+  const destination = env.generators["neoman:myfirstgen"].destinationRoot;
+
+  const files = await readDir(destination);
+
+  expect(files).toHaveLength(4);
+  expect(files).toEqual([
+    join(destination, "README.md"),
+    join(destination, "file1.txt"),
+    join(destination, "files", "file1.txt"),
+    join(destination, "files", "file2.txt")
+  ]);
 });

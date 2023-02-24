@@ -1,5 +1,5 @@
-import { NeomanEnvironment } from "./environment";
-import type { NeomanGenerator } from "./types";
+import { NeomanEnvironment } from "./environment.ts";
+import type { NeomanGenerator } from "./types.ts";
 
 export { NeomanGenerator };
 

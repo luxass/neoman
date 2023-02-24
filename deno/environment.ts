@@ -19,8 +19,8 @@ import { dirname, isAbsolute, join, resolve } from "node:path";
 
 import EJS from "ejs";
 
-import type { NeomanGenerator } from "./types";
-import { deepMerge } from "./utils";
+import type { NeomanGenerator } from "./types.ts";
+import { deepMerge } from "./utils.ts";
 
 export class NeomanEnvironment<
   Generators extends {
