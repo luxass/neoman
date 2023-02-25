@@ -1,6 +1,6 @@
 # Neoman
 
-> A very small yeoman alternative
+> A small yeoman generator alternative
 
 ## Installation
 
@@ -10,28 +10,47 @@ npm install @luxass/neoman
 
 ## Setup
 
-```typescript
+```ts
 import { NeomanGenerator, createEnvironment } from "@luxass/neoman";
 
-const neomanEnv = createEnvironment({
-  // Adding a global name variable.
-  name: "Neoman"
-});
-
-function projectGenerator(ctx: any): NeomanGenerator {
+function projectGenerator(): NeomanGenerator<{}> {
   return {
-    sourceRoot: "./tests/shared",
-    destinationRoot: "./tests/shared/out",
-    writing: ({ copy, templatePath, destinationPath, installDependencies }) => {
-      copy(templatePath("_package.json"), destinationPath("package.json"), ctx);
-      installDependencies("pnpm", ["typescript"]);
+    sourceRoot: "./template",
+    destinationRoot: "./out",
+    run: async (ctx) => {
+
+      // Get the context from the environment
+      const name = ctx.options.name;
+
+      // Copy a file
+      await ctx.copy(templatePath(".eslintrc"), destinationPath(".eslintrc"));
+
+      // Copy a directory
+      await ctx.copy(templatePath("src"), destinationPath("src"));
+
+      // Copy a template
+      await ctx.copyTpl(
+        templatePath("package.json"),
+        destinationPath("package.json"),
+        {
+          name: ctx.name
+        }
+      );
     }
   };
 }
 
-// Register the generator
-neomanEnv.register("neoman-namespace", projectGenerator);
+const env = createEnvironment({
+  generators: {
+    // You can register generators here
+    "neoman-namespace": projectGenerator
+  },
+  context: {
+    name: "Tim"
+  }
+}).register("neoman-namespace:2", projectGenerator);
 
-neomanEnv.run("neoman-namespace"); // without additional context
-neomanEnv.run("neoman-namespace", { version: "v1.0.0" }); // with additional context
+
+// This will now give your intellisense.
+env.run("neoman-namespace:2");
 ```
