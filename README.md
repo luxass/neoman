@@ -2,6 +2,10 @@
 
 > A small yeoman generator alternative
 
+<p align="center">
+  <a href="https://www.npmjs.com/package/@luxass/neoman"><img src="https://img.shields.io/npm/v/@luxass/neoman?style=for-the-badge&color=3FA7D6&label="></a>
+<p>
+
 ## Installation
 
 ```bash
