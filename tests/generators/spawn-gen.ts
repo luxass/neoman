@@ -5,14 +5,15 @@ export function SpawnGenerator(): NeomanGenerator<{}> {
     sourceRoot: "./tests/fixtures",
     destinationRoot: "./tests/fixtures/spawn-fixture",
     run: async (ctx) => {
-      await ctx.spawn(
-        "echo",
-        [
-          "Hello, World!",
-          ">",
-          "file1.txt"
-        ]
-      );
+      await ctx.spawn("npm", [
+        "init",
+        "-y"
+      ])
+      // await ctx.spawn(
+      //   "cp -r ../extra files",
+      //   [
+      //   ]
+      // );
     }
   };
 }

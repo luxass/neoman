@@ -107,7 +107,6 @@ export class NeomanEnvironment<
         if (!isAbsolute(sourcePath)) {
           sourcePath = join(sourceRoot, sourcePath);
         }
-        console.log(sourcePath);
 
         return sourcePath;
       },
