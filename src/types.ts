@@ -1,4 +1,10 @@
 import type EJS from "ejs";
+import type {
+  ExecaReturnValue,
+  ExecaSyncReturnValue,
+  Options as SpawnOptions,
+  SyncOptions as SpawnSyncOptions
+} from "execa";
 
 export interface NeomanGenerator<T extends Record<string, unknown>> {
   destinationRoot: string;
@@ -23,12 +29,17 @@ export interface RunOptions<T> {
 
   templatePath(...path: string[]): string;
   destinationPath(...path: string[]): string;
-  // spawn(
-  //   command: string,
-  //   args: string[],
-  //   opts?: SpawnOptions
-  // ): ExecaChildProcess<string>;
-  // installDependencies(pkgManager: PackageManager, deps: string[]): void;
+
+  spawn(
+    command: string,
+    args: string[],
+    opts?: SpawnOptions
+  ): Promise<ExecaReturnValue<string>>;
+  spawnSync(
+    command: string,
+    args: string[],
+    opts?: SpawnSyncOptions
+  ): ExecaSyncReturnValue<string>;
 
   ejs: typeof EJS;
 }

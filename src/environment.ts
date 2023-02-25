@@ -18,6 +18,13 @@ import {
 import { dirname, isAbsolute, join, resolve } from "node:path";
 
 import EJS from "ejs";
+import type {
+  ExecaReturnValue,
+  ExecaSyncReturnValue,
+  Options as SpawnOptions,
+  SyncOptions as SpawnSyncOptions
+} from "execa";
+import { execa, execaSync } from "execa";
 
 import type { NeomanGenerator } from "./types";
 import { deepMerge } from "./utils";
@@ -137,6 +144,20 @@ export class NeomanEnvironment<
 
         return sourcePath;
       },
+      spawn: async (command: string, args: string[], opts?: SpawnOptions) =>
+        await spawn({
+          command,
+          args,
+          opts,
+          destinationRoot
+        }),
+      spawnSync: (command: string, args: string[], opts?: SpawnSyncOptions) =>
+        spawnSync({
+          command,
+          args,
+          opts,
+          destinationRoot
+        }),
       ejs: EJS
     });
   }
@@ -302,4 +323,40 @@ function copyTplSync({
     resolve(destinationRoot, destinationPath),
     EJS.render(content, ctx)
   );
+}
+
+async function spawn({
+  command,
+  args,
+  opts,
+  destinationRoot
+}: {
+  command: string;
+  args: string[];
+  opts?: SpawnOptions;
+  destinationRoot?: string;
+}): Promise<ExecaReturnValue<string>> {
+  return execa(command, args, {
+    cwd: destinationRoot,
+    stdio: "inherit",
+    ...opts
+  });
+}
+
+function spawnSync({
+  command,
+  args,
+  opts,
+  destinationRoot
+}: {
+  command: string;
+  args: string[];
+  opts?: SpawnSyncOptions;
+  destinationRoot?: string;
+}): ExecaSyncReturnValue<string> {
+  return execaSync(command, args, {
+    cwd: destinationRoot,
+    stdio: "inherit",
+    ...opts
+  });
 }
