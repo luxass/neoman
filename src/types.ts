@@ -1,15 +1,10 @@
 import type EJS from "ejs";
-import type {
-  ExecaReturnValue,
-  ExecaSyncReturnValue,
-  Options as SpawnOptions,
-  SyncOptions as SpawnSyncOptions
-} from "execa";
+import type { ExecaReturnValue, Options as SpawnOptions } from "execa";
 
 export interface NeomanGenerator<T extends Record<string, unknown>> {
   destinationRoot: string;
   sourceRoot: string;
-  run(opts: RunOptions<T>): Promisify<void>;
+  run(opts: RunOptions<T>): Promise<void>;
 }
 
 export interface RunOptions<T> {
@@ -20,12 +15,6 @@ export interface RunOptions<T> {
     destinationPath: string,
     ctx: Record<string, unknown>
   ): Promise<void>;
-  copySync(filePath: string, destinationPath: string): void;
-  copyTplSync(
-    filePath: string,
-    destinationPath: string,
-    ctx: Record<string, unknown>
-  ): void;
 
   templatePath(...path: string[]): string;
   destinationPath(...path: string[]): string;
@@ -35,14 +24,5 @@ export interface RunOptions<T> {
     args: string[],
     opts?: SpawnOptions
   ): Promise<ExecaReturnValue<string>>;
-  spawnSync(
-    command: string,
-    args: string[],
-    opts?: SpawnSyncOptions
-  ): ExecaSyncReturnValue<string>;
-
   ejs: typeof EJS;
 }
-export type Promisify<T> = Promise<T> | T;
-
-export type PackageManager = "npm" | "yarn" | "pnpm";

@@ -1,10 +1,11 @@
 import { readdir } from "fs/promises";
 import { join } from "node:path";
 
-import { afterAll, expect, test } from "vitest";
+import { afterAll, describe, expect, test } from "vitest";
 
 import { createEnvironment } from "../src";
 import { CopyGenerator } from "./generators/copy-gen";
+import { SpawnGenerator } from "./generators/spawn-gen";
 
 async function readDir(dir: string): Promise<string[]> {
   const dirents = await readdir(dir, { withFileTypes: true });
@@ -27,7 +28,7 @@ test("should register a generator", () => {
       "neoman:myfirstgen": {
         sourceRoot: "templates",
         destinationRoot: "output",
-        run: () => {}
+        run: async () => {}
       }
     }
   });
@@ -59,21 +60,47 @@ test("throw error if generator is not registered", async () => {
   );
 });
 
-test("run a generator", async () => {
+test("run copy generator", async () => {
   const env = createEnvironment({
     generators: {
-      "neoman:myfirstgen": CopyGenerator()
+      "neoman:copy": CopyGenerator()
+    },
+    context: {
+      global: "global"
+    }
+  });
+  expect(Object.keys(env.generators)).toHaveLength(2);
+
+  await env.run("neoman:copy");
+
+  const destination = env.generators["neoman:copy"].destinationRoot;
+
+  const files = await readDir(destination);
+
+  expect(files).toHaveLength(4);
+  expect(files).toEqual([
+    join(destination, "README.md"),
+    join(destination, "file1.txt"),
+    join(destination, "files", "file1.txt"),
+    join(destination, "files", "file2.txt")
+  ]);
+});
+
+describe("run spawn generator", async () => {
+  const env = createEnvironment({
+    generators: {
+      "neoman:spawn": SpawnGenerator()
     },
     context: {
       global: "global"
     }
   });
 
-  expect(Object.keys(env.generators)).toHaveLength(1);
+  expect(Object.keys(env.generators)).toHaveLength(2);
 
-  await env.run("neoman:myfirstgen");
+  await env.run("neoman:spawn");
 
-  const destination = env.generators["neoman:myfirstgen"].destinationRoot;
+  const destination = env.generators["neoman:spawn"].destinationRoot;
 
   const files = await readDir(destination);
 

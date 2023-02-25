@@ -1,13 +1,4 @@
 import {
-  cpSync,
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  readdirSync,
-  statSync,
-  writeFileSync
-} from "node:fs";
-import {
   cp,
   mkdir,
   readFile,
@@ -18,13 +9,8 @@ import {
 import { dirname, isAbsolute, join, resolve } from "node:path";
 
 import EJS from "ejs";
-import type {
-  ExecaReturnValue,
-  ExecaSyncReturnValue,
-  Options as SpawnOptions,
-  SyncOptions as SpawnSyncOptions
-} from "execa";
-import { execa, execaSync } from "execa";
+import type { ExecaReturnValue, Options as SpawnOptions } from "execa";
+import { execa } from "execa";
 
 import type { NeomanGenerator } from "./types";
 import { deepMerge } from "./utils";
@@ -109,25 +95,6 @@ export class NeomanEnvironment<
           destinationRoot,
           sourceRoot
         }),
-      copySync: (filePath: string, destinationPath: string) =>
-        copySync({
-          filePath,
-          destinationPath,
-          destinationRoot,
-          sourceRoot
-        }),
-      copyTplSync: (
-        filePath: string,
-        destinationPath: string,
-        ctx: Record<string, unknown>
-      ) =>
-        copyTplSync({
-          filePath,
-          destinationPath,
-          ctx: deepMerge(generatorCtx, ctx),
-          destinationRoot,
-          sourceRoot
-        }),
       destinationPath: (...path: string[]) => {
         let destinationPath = join(...path);
         if (!isAbsolute(destinationPath)) {
@@ -146,13 +113,6 @@ export class NeomanEnvironment<
       },
       spawn: async (command: string, args: string[], opts?: SpawnOptions) =>
         await spawn({
-          command,
-          args,
-          opts,
-          destinationRoot
-        }),
-      spawnSync: (command: string, args: string[], opts?: SpawnSyncOptions) =>
-        spawnSync({
           command,
           args,
           opts,
@@ -197,42 +157,6 @@ async function copy({
   }
 
   await cp(
-    resolve(sourceRoot, filePath),
-    resolve(destinationRoot, destinationPath)
-  );
-}
-
-function copySync({
-  filePath,
-  destinationPath,
-  destinationRoot,
-  sourceRoot
-}: {
-  filePath: string;
-  destinationPath: string;
-  destinationRoot: string;
-  sourceRoot: string;
-}): void {
-  const fileStat = statSync(filePath);
-
-  if (fileStat?.isDirectory()) {
-    const files = readdirSync(filePath);
-    files.forEach((file) =>
-      copySync({
-        filePath: join(filePath, file),
-        destinationPath: join(destinationPath, file),
-        destinationRoot,
-        sourceRoot
-      })
-    );
-    return;
-  }
-
-  if (!existsSync(dirname(destinationPath))) {
-    mkdirSync(dirname(destinationPath), { recursive: true });
-  }
-
-  cpSync(
     resolve(sourceRoot, filePath),
     resolve(destinationRoot, destinationPath)
   );
@@ -284,47 +208,6 @@ async function copyTpl({
   );
 }
 
-function copyTplSync({
-  filePath,
-  destinationPath,
-  ctx,
-  destinationRoot,
-  sourceRoot
-}: {
-  filePath: string;
-  destinationPath: string;
-  ctx: Record<string, unknown>;
-  destinationRoot: string;
-  sourceRoot: string;
-}): void {
-  const fileStat = statSync(filePath);
-
-  if (fileStat?.isDirectory()) {
-    const files = readdirSync(filePath);
-    files.forEach((file) =>
-      copyTplSync({
-        filePath: join(filePath, file),
-        destinationPath: join(destinationPath, file),
-        destinationRoot,
-        sourceRoot,
-        ctx
-      })
-    );
-    return;
-  }
-
-  if (!existsSync(dirname(destinationPath))) {
-    mkdirSync(dirname(destinationPath), { recursive: true });
-  }
-
-  const content = readFileSync(resolve(sourceRoot, filePath), "utf-8");
-
-  writeFileSync(
-    resolve(destinationRoot, destinationPath),
-    EJS.render(content, ctx)
-  );
-}
-
 async function spawn({
   command,
   args,
@@ -337,24 +220,6 @@ async function spawn({
   destinationRoot?: string;
 }): Promise<ExecaReturnValue<string>> {
   return execa(command, args, {
-    cwd: destinationRoot,
-    stdio: "inherit",
-    ...opts
-  });
-}
-
-function spawnSync({
-  command,
-  args,
-  opts,
-  destinationRoot
-}: {
-  command: string;
-  args: string[];
-  opts?: SpawnSyncOptions;
-  destinationRoot?: string;
-}): ExecaSyncReturnValue<string> {
-  return execaSync(command, args, {
     cwd: destinationRoot,
     stdio: "inherit",
     ...opts
