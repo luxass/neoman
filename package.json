@@ -45,7 +45,7 @@
     "execa": "^6.1.0"
   },
   "devDependencies": {
-    "@luxass/eslint-config": "^3.0.0",
+    "@luxass/eslint-config": "^3.2.0",
     "@luxass/prettier-config": "^1.1.9",
     "@types/ejs": "^3.1.1",
     "@types/node": "^18.11.18",
