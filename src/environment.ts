@@ -17,7 +17,7 @@ import { deepMerge } from "./utils";
 
 export class NeomanEnvironment<
   Generators extends {
-    [key: string]: NeomanGenerator<Record<string, unknown>>;
+    [key: string]: NeomanGenerator<Record<string, unknown>>
   },
   Context extends { [key: string]: any }
 > {
@@ -128,10 +128,10 @@ async function copy({
   destinationRoot,
   sourceRoot
 }: {
-  filePath: string;
-  destinationPath: string;
-  destinationRoot: string;
-  sourceRoot: string;
+  filePath: string
+  destinationPath: string
+  destinationRoot: string
+  sourceRoot: string
 }): Promise<void> {
   const fileStat = await stat(filePath).catch(() => null);
 
@@ -168,11 +168,11 @@ async function copyTpl({
   destinationRoot,
   sourceRoot
 }: {
-  filePath: string;
-  destinationPath: string;
-  ctx: Record<string, unknown>;
-  destinationRoot: string;
-  sourceRoot: string;
+  filePath: string
+  destinationPath: string
+  ctx: Record<string, unknown>
+  destinationRoot: string
+  sourceRoot: string
 }): Promise<void> {
   const fileStat = await stat(filePath).catch(() => null);
 
@@ -213,10 +213,10 @@ async function spawn({
   opts,
   destinationRoot
 }: {
-  command: string;
-  args: string[];
-  opts?: SpawnOptions;
-  destinationRoot?: string;
+  command: string
+  args: string[]
+  opts?: SpawnOptions
+  destinationRoot?: string
 }): Promise<ExecaReturnValue<string>> {
   return execa(command, args, {
     cwd: destinationRoot,

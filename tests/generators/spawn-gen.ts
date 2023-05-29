@@ -8,7 +8,7 @@ export function SpawnGenerator(): NeomanGenerator<{}> {
       await ctx.spawn("npm", [
         "init",
         "-y"
-      ])
+      ]);
       // await ctx.spawn(
       //   "cp -r ../extra files",
       //   [
