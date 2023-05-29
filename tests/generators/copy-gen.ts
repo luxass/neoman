@@ -2,8 +2,8 @@ import type { NeomanGenerator } from "../../src";
 
 export function CopyGenerator(): NeomanGenerator<{
   cheffs: {
-    kiss: string;
-  };
+    kiss: string
+  }
 }> {
   return {
     sourceRoot: "./tests/fixtures",
