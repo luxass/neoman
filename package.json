@@ -1,7 +1,7 @@
 {
   "name": "@luxass/neoman",
   "type": "module",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A small yeoman generator alternative",
   "author": {
     "name": "Lucas Norgaard",
@@ -37,8 +37,10 @@
   ],
   "scripts": {
     "build": "tsup",
-    "lint": "eslint {src,tests}/**/*.ts",
-    "test": "vitest"
+    "dev": "vitest",
+    "test": "vitest --run",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "ejs": "^3.1.9",
@@ -51,6 +53,6 @@
     "eslint": "^8.41.0",
     "tsup": "^6.7.0",
     "typescript": "^5.0.4",
-    "vitest": "^0.31.1"
+    "vitest": "^0.31.3"
   }
 }
