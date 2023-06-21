@@ -2,6 +2,7 @@
   "name": "@luxass/neoman",
   "type": "module",
   "version": "0.2.1",
+  "packageManager": "pnpm@8.6.3",
   "description": "A small yeoman generator alternative",
   "author": {
     "name": "Lucas Norgaard",
@@ -51,7 +52,7 @@
     "@types/ejs": "^3.1.2",
     "@types/node": "^20.2.5",
     "eslint": "^8.41.0",
-    "tsup": "^6.7.0",
+    "tsup": "^7.0.0",
     "typescript": "^5.0.4",
     "vitest": "^0.31.3"
   }
