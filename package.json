@@ -2,7 +2,7 @@
   "name": "@luxass/neoman",
   "type": "module",
   "version": "0.2.1",
-  "packageManager": "pnpm@8.6.8",
+  "packageManager": "pnpm@8.6.11",
   "description": "A small yeoman generator alternative",
   "author": {
     "name": "Lucas Norgaard",
