@@ -1,18 +1,17 @@
-# Neoman
+# 📋 neoman
 
-> A small yeoman generator alternative
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
 
-<p align="center">
-  <a href="https://www.npmjs.com/package/@luxass/neoman"><img src="https://img.shields.io/npm/v/@luxass/neoman?style=for-the-badge&color=3FA7D6&label="></a>
-<p>
+A small [`yeoman`](https://yeoman.io/) alternative
 
-## Installation
+## 📦 Installation
 
-```bash
+```sh
 npm install @luxass/neoman
 ```
 
-## Setup
+## 📚 Usage
 
 ```ts
 import { NeomanGenerator, createEnvironment } from "@luxass/neoman";
@@ -22,7 +21,6 @@ function projectGenerator(): NeomanGenerator<{}> {
     sourceRoot: "./template",
     destinationRoot: "./out",
     run: async (ctx) => {
-
       // Get the context from the environment
       const name = ctx.options.name;
 
@@ -54,7 +52,17 @@ const env = createEnvironment({
   }
 }).register("neoman-namespace:2", projectGenerator);
 
-
 // This will now give your intellisense.
 env.run("neoman-namespace:2");
 ```
+
+## 📄 License
+
+Published under [MIT License](./LICENSE).
+
+<!-- Badges -->
+
+[npm-version-src]: https://img.shields.io/npm/v/@luxass/neoman?style=flat&colorA=18181B&colorB=4169E1
+[npm-version-href]: https://npmjs.com/package/@luxass/neoman
+[npm-downloads-src]: https://img.shields.io/npm/dm/@luxass/neoman?style=flat&colorA=18181B&colorB=4169E1
+[npm-downloads-href]: https://npmjs.com/package/@luxass/neoman
