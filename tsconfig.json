@@ -1,18 +1,18 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
     "lib": ["ESNext"],
+    "rootDir": "./src",
+    "module": "ESNext",
     "moduleResolution": "node",
-    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "strict": true,
-    "declaration": true,
     "noUnusedLocals": true,
     "useUnknownInCatchVariables": false,
-    "resolveJsonModule": true,
-    "preserveSymlinks": true,
-    "rootDir": "./src",
-    "outDir": "./dist"
+    "declaration": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "preserveSymlinks": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

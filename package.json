@@ -1,14 +1,14 @@
 {
   "name": "@luxass/neoman",
-  "type": "module",
   "version": "0.2.1",
-  "packageManager": "pnpm@8.14.3",
   "description": "A small yeoman generator alternative",
+  "type": "module",
   "author": {
     "name": "Lucas Norgaard",
     "email": "lucasnrgaard@gmail.com",
     "url": "https://luxass.dev"
   },
+  "packageManager": "pnpm@8.14.3",
   "license": "MIT",
   "homepage": "https://github.com/luxass/neoman",
   "repository": {
@@ -24,24 +24,30 @@
   ],
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "tsup",
-    "dev": "vitest",
+    "dev": "tsup --watch",
     "test": "vitest --run",
+    "test:watch": "vitest",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "ejs": "^3.1.9",
@@ -52,6 +58,7 @@
     "@types/ejs": "^3.1.5",
     "@types/node": "^20.2.5",
     "eslint": "^8.56.0",
+    "eslint-plugin-format": "^0.1.0",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3",
     "vitest": "^1.2.2"
