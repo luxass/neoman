@@ -1,7 +1,7 @@
 import { NeomanEnvironment } from "./environment";
 import type { NeomanGenerator } from "./types";
 
-export { NeomanGenerator };
+export type { NeomanGenerator };
 
 export interface EnvironmentOptions<
   T extends {
