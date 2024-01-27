@@ -1,19 +1,25 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["ESNext"],
-    "rootDir": "./src",
+    "target": "ES2022",
+    "lib": [
+      "ES2022"
+    ],
+    "moduleDetection": "force",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
+    "allowJs": true,
     "strict": true,
-    "noUnusedLocals": true,
-    "useUnknownInCatchVariables": false,
+    "noUncheckedIndexedAccess": true,
     "declaration": true,
-    "outDir": "./dist",
+    "noEmit": true,
     "esModuleInterop": true,
-    "preserveSymlinks": true
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "www"
+  ]
 }
