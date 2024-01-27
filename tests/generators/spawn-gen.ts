@@ -7,13 +7,13 @@ export function SpawnGenerator(): NeomanGenerator<{}> {
     run: async (ctx) => {
       await ctx.spawn("npm", [
         "init",
-        "-y"
+        "-y",
       ]);
       // await ctx.spawn(
       //   "cp -r ../extra files",
       //   [
       //   ]
       // );
-    }
+    },
   };
 }

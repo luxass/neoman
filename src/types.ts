@@ -1,28 +1,28 @@
 import type EJS from "ejs";
 import type { ExecaReturnValue, Options as SpawnOptions } from "execa";
 
-export type NeomanGenerator<T extends Record<string, unknown>> = {
-  destinationRoot: string
-  sourceRoot: string
-  run(opts: RunOptions<T>): Promise<void>
-};
+export interface NeomanGenerator<T extends Record<string, unknown>> {
+  destinationRoot: string;
+  sourceRoot: string;
+  run(opts: RunOptions<T>): Promise<void>;
+}
 
-export type RunOptions<T> = {
-  options?: T
-  copy(filePath: string, destinationPath: string): Promise<void>
+export interface RunOptions<T> {
+  options?: T;
+  copy(filePath: string, destinationPath: string): Promise<void>;
   copyTpl(
     filePath: string,
     destinationPath: string,
     ctx: Record<string, unknown>
-  ): Promise<void>
+  ): Promise<void>;
 
-  templatePath(...path: string[]): string
-  destinationPath(...path: string[]): string
+  templatePath(...path: string[]): string;
+  destinationPath(...path: string[]): string;
 
   spawn(
     command: string,
     args: string[],
     opts?: SpawnOptions
-  ): Promise<ExecaReturnValue<string>>
-  ejs: typeof EJS
-};
+  ): Promise<ExecaReturnValue<string>>;
+  ejs: typeof EJS;
+}

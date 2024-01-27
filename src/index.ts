@@ -3,28 +3,28 @@ import type { NeomanGenerator } from "./types";
 
 export { NeomanGenerator };
 
-export type EnvironmentOptions<
+export interface EnvironmentOptions<
   T extends {
-    [key: string]: NeomanGenerator<Record<string, unknown>>
+    [key: string]: NeomanGenerator<Record<string, unknown>>;
   },
   C extends {
-    [key: string]: any
-  }
-> = {
-  generators?: T
-  context?: C
-};
+    [key: string]: any;
+  },
+> {
+  generators?: T;
+  context?: C;
+}
 
 export function createEnvironment<
   T extends {
-    [key: string]: NeomanGenerator<Record<string, unknown>>
+    [key: string]: NeomanGenerator<Record<string, unknown>>;
   },
   K extends {
-    [key: string]: any
-  }
+    [key: string]: any;
+  },
 >(options?: EnvironmentOptions<T, K>) {
   return new NeomanEnvironment<T, K>(
     options?.generators ?? ({} as T),
-    options?.context ?? ({} as K)
+    options?.context ?? ({} as K),
   );
 }

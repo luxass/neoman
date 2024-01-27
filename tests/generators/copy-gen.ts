@@ -2,8 +2,8 @@ import type { NeomanGenerator } from "../../src";
 
 export function CopyGenerator(): NeomanGenerator<{
   cheffs: {
-    kiss: string
-  }
+    kiss: string;
+  };
 }> {
   return {
     sourceRoot: "./tests/fixtures",
@@ -11,7 +11,7 @@ export function CopyGenerator(): NeomanGenerator<{
     run: async (ctx) => {
       await ctx.copy(
         ctx.templatePath("file1.txt"),
-        ctx.destinationPath("file1.txt")
+        ctx.destinationPath("file1.txt"),
       );
 
       await ctx.copy(ctx.templatePath("extra"), ctx.destinationPath("files"));
@@ -20,9 +20,9 @@ export function CopyGenerator(): NeomanGenerator<{
         ctx.templatePath("README.md"),
         ctx.destinationPath("README.md"),
         {
-          name: "Neoman"
-        }
+          name: "Neoman",
+        },
       );
-    }
+    },
   };
 }

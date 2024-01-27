@@ -4,7 +4,7 @@ import {
   readFile,
   readdir,
   stat,
-  writeFile
+  writeFile,
 } from "node:fs/promises";
 import { dirname, isAbsolute, join, resolve } from "node:path";
 
@@ -17,9 +17,9 @@ import { deepMerge } from "./utils";
 
 export class NeomanEnvironment<
   Generators extends {
-    [key: string]: NeomanGenerator<Record<string, unknown>>
+    [key: string]: NeomanGenerator<Record<string, unknown>>;
   },
-  Context extends { [key: string]: any }
+  Context extends { [key: string]: any },
 > {
   private readonly context: Context;
   public generators: Generators;
@@ -31,10 +31,10 @@ export class NeomanEnvironment<
 
   register<
     GeneratorName extends string,
-    GeneratorCtx extends Record<string, unknown>
+    GeneratorCtx extends Record<string, unknown>,
   >(
     namespace: GeneratorName,
-    generator: NeomanGenerator<GeneratorCtx>
+    generator: NeomanGenerator<GeneratorCtx>,
   ): NeomanEnvironment<
     Generators & {
       [key in GeneratorName]: NeomanGenerator<GeneratorCtx>;
@@ -47,7 +47,7 @@ export class NeomanEnvironment<
 
     this.generators = {
       ...this.generators,
-      [namespace]: generator
+      [namespace]: generator,
     };
 
     return this;
@@ -55,12 +55,12 @@ export class NeomanEnvironment<
 
   async run<Namespace extends keyof Generators>(
     namespace: Namespace,
-    ctx?: Record<string, any>
+    ctx?: Record<string, any>,
   ) {
     const generator = this.generators[namespace];
     if (!generator) {
       return Promise.reject(
-        new Error(`Generator ${String(namespace)} not registered`)
+        new Error(`Generator ${String(namespace)} not registered`),
       );
     }
 
@@ -81,19 +81,19 @@ export class NeomanEnvironment<
           filePath,
           destinationPath,
           destinationRoot,
-          sourceRoot
+          sourceRoot,
         }),
       copyTpl: async (
         filePath: string,
         destinationPath: string,
-        ctx: Record<string, unknown>
+        ctx: Record<string, unknown>,
       ) =>
         await copyTpl({
           filePath,
           destinationPath,
           ctx: deepMerge(generatorCtx, ctx),
           destinationRoot,
-          sourceRoot
+          sourceRoot,
         }),
       destinationPath: (...path: string[]) => {
         let destinationPath = join(...path);
@@ -115,9 +115,9 @@ export class NeomanEnvironment<
           command,
           args,
           opts,
-          destinationRoot
+          destinationRoot,
         }),
-      ejs: EJS
+      ejs: EJS,
     });
   }
 }
@@ -126,12 +126,12 @@ async function copy({
   filePath,
   destinationPath,
   destinationRoot,
-  sourceRoot
+  sourceRoot,
 }: {
-  filePath: string
-  destinationPath: string
-  destinationRoot: string
-  sourceRoot: string
+  filePath: string;
+  destinationPath: string;
+  destinationRoot: string;
+  sourceRoot: string;
 }): Promise<void> {
   const fileStat = await stat(filePath).catch(() => null);
 
@@ -143,9 +143,9 @@ async function copy({
           filePath: join(filePath, file),
           destinationPath: join(destinationPath, file),
           destinationRoot,
-          sourceRoot
-        })
-      )
+          sourceRoot,
+        }),
+      ),
     );
     return;
   }
@@ -157,7 +157,7 @@ async function copy({
 
   await cp(
     resolve(sourceRoot, filePath),
-    resolve(destinationRoot, destinationPath)
+    resolve(destinationRoot, destinationPath),
   );
 }
 
@@ -166,13 +166,13 @@ async function copyTpl({
   destinationPath,
   ctx,
   destinationRoot,
-  sourceRoot
+  sourceRoot,
 }: {
-  filePath: string
-  destinationPath: string
-  ctx: Record<string, unknown>
-  destinationRoot: string
-  sourceRoot: string
+  filePath: string;
+  destinationPath: string;
+  ctx: Record<string, unknown>;
+  destinationRoot: string;
+  sourceRoot: string;
 }): Promise<void> {
   const fileStat = await stat(filePath).catch(() => null);
 
@@ -185,9 +185,9 @@ async function copyTpl({
           destinationPath: join(destinationPath, file),
           destinationRoot,
           sourceRoot,
-          ctx
-        })
-      )
+          ctx,
+        }),
+      ),
     );
     return;
   }
@@ -202,8 +202,8 @@ async function copyTpl({
   await writeFile(
     resolve(destinationRoot, destinationPath),
     await EJS.render(content, ctx, {
-      async: true
-    })
+      async: true,
+    }),
   );
 }
 
@@ -211,16 +211,16 @@ async function spawn({
   command,
   args,
   opts,
-  destinationRoot
+  destinationRoot,
 }: {
-  command: string
-  args: string[]
-  opts?: SpawnOptions
-  destinationRoot?: string
+  command: string;
+  args: string[];
+  opts?: SpawnOptions;
+  destinationRoot?: string;
 }): Promise<ExecaReturnValue<string>> {
   return execa(command, args, {
     cwd: destinationRoot,
     stdio: "inherit",
-    ...opts
+    ...opts,
   });
 }

@@ -46,7 +46,7 @@
     "dev": "tsup --watch",
     "test": "vitest --run",
     "test:watch": "vitest",
-    "lint": "eslint .",
+    "lint": "eslint . --report-unused-disable-directives",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
