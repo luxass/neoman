@@ -1,7 +1,7 @@
 import type EJS from "ejs";
 import type { ExecaReturnValue, Options as SpawnOptions } from "execa";
 
-export interface NeomanGenerator<T extends Record<string, unknown>> {
+export interface NeomanGenerator<T extends Record<string, unknown> = Record<string, unknown>> {
   destinationRoot: string;
   sourceRoot: string;
   run: (opts: RunOptions<T>) => Promise<void>;

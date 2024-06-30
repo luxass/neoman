@@ -1,6 +1,6 @@
 import type { NeomanGenerator } from "../../src";
 
-export function SpawnGenerator(): NeomanGenerator<{}> {
+export function SpawnGenerator(): NeomanGenerator {
   return {
     sourceRoot: "./tests/fixtures",
     destinationRoot: "./tests/fixtures/spawn-fixture",

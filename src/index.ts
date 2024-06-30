@@ -8,7 +8,7 @@ export interface EnvironmentOptions<
     [key: string]: NeomanGenerator<Record<string, unknown>>;
   },
   C extends {
-    [key: string]: any;
+    [key: string]: unknown;
   },
 > {
   generators?: T;
@@ -17,7 +17,7 @@ export interface EnvironmentOptions<
 
 export function createEnvironment<
   T extends {
-    [key: string]: NeomanGenerator<Record<string, unknown>>;
+    [key: string]: NeomanGenerator<any>;
   },
   K extends {
     [key: string]: any;
