@@ -7,9 +7,8 @@ import {
   writeFile,
 } from "node:fs/promises";
 import { dirname, isAbsolute, join, resolve } from "node:path";
-
 import EJS from "ejs";
-import type { ExecaReturnValue, Options as SpawnOptions } from "execa";
+import type { ResultPromise, Options as SpawnOptions } from "execa";
 import { execa } from "execa";
 
 import type { NeomanGenerator } from "./types";
@@ -39,8 +38,8 @@ export class NeomanEnvironment<
     Generators & {
       [key in GeneratorName]: NeomanGenerator<GeneratorCtx>;
     },
-    Context
-  > {
+      Context
+    > {
     if (this.generators[namespace]) {
       throw new Error(`Generator ${String(namespace)} already exists`);
     }
@@ -207,7 +206,7 @@ async function copyTpl({
   );
 }
 
-async function spawn({
+async function spawn<TOptions extends SpawnOptions = {}>({
   command,
   args,
   opts,
@@ -215,9 +214,9 @@ async function spawn({
 }: {
   command: string;
   args: string[];
-  opts?: SpawnOptions;
+  opts?: TOptions;
   destinationRoot?: string;
-}): Promise<ExecaReturnValue<string>> {
+}) {
   return execa(command, args, {
     cwd: destinationRoot,
     stdio: "inherit",
