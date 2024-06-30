@@ -8,7 +8,7 @@ import {
 } from "node:fs/promises";
 import { dirname, isAbsolute, join, resolve } from "node:path";
 import EJS from "ejs";
-import type { ResultPromise, Options as SpawnOptions } from "execa";
+import type { ExecaReturnValue, Options as SpawnOptions } from "execa";
 import { execa } from "execa";
 
 import type { NeomanGenerator } from "./types";
@@ -206,7 +206,7 @@ async function copyTpl({
   );
 }
 
-async function spawn<TOptions extends SpawnOptions = {}>({
+async function spawn({
   command,
   args,
   opts,
@@ -214,9 +214,9 @@ async function spawn<TOptions extends SpawnOptions = {}>({
 }: {
   command: string;
   args: string[];
-  opts?: TOptions;
+  opts?: SpawnOptions;
   destinationRoot?: string;
-}) {
+}): Promise<ExecaReturnValue<string>> {
   return execa(command, args, {
     cwd: destinationRoot,
     stdio: "inherit",
