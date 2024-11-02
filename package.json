@@ -1,6 +1,6 @@
 {
   "name": "@luxass/neoman",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A small yeoman generator alternative",
   "type": "module",
   "author": {
