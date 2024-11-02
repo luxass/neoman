@@ -1,5 +1,5 @@
-import { NeomanEnvironment } from "./environment";
 import type { NeomanGenerator } from "./types";
+import { NeomanEnvironment } from "./environment";
 
 export type { NeomanGenerator };
 

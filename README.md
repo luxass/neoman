@@ -14,7 +14,7 @@ npm install @luxass/neoman
 ## 📚 Usage
 
 ```ts
-import { NeomanGenerator, createEnvironment } from "@luxass/neoman";
+import { createEnvironment, NeomanGenerator } from "@luxass/neoman";
 
 function projectGenerator(): NeomanGenerator<Record<string, unknown>> {
   return {

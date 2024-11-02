@@ -1,17 +1,17 @@
+import type { ExecaReturnValue, Options as SpawnOptions } from "execa";
+import type { NeomanGenerator } from "./types";
 import {
   cp,
   mkdir,
-  readFile,
   readdir,
+  readFile,
   stat,
   writeFile,
 } from "node:fs/promises";
 import { dirname, isAbsolute, join, resolve } from "node:path";
 import EJS from "ejs";
-import type { ExecaReturnValue, Options as SpawnOptions } from "execa";
-import { execa } from "execa";
 
-import type { NeomanGenerator } from "./types";
+import { execa } from "execa";
 import { deepMerge } from "./utils";
 
 export class NeomanEnvironment<
