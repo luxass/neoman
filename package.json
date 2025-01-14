@@ -58,7 +58,7 @@
     "@types/ejs": "^3.1.5",
     "@types/node": "^20.14.9",
     "eslint": "^9.15.0",
-    "eslint-plugin-format": "^0.1.2",
+    "eslint-plugin-format": "^1.0.0",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
     "vitest": "^2.1.5"
