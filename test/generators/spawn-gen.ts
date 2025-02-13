@@ -9,11 +9,6 @@ export function SpawnGenerator(): NeomanGenerator {
         "init",
         "-y",
       ]);
-      // await ctx.spawn(
-      //   "cp -r ../extra files",
-      //   [
-      //   ]
-      // );
     },
   };
 }

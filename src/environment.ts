@@ -1,5 +1,5 @@
-import type { ExecaReturnValue, Options as SpawnOptions } from "execa";
-import type { NeomanGenerator } from "./types";
+import type { Result } from "execa";
+import type { NeomanGenerator, SpawnOptions } from "./types";
 import {
   cp,
   mkdir,
@@ -9,8 +9,8 @@ import {
   writeFile,
 } from "node:fs/promises";
 import { dirname, isAbsolute, join, resolve } from "node:path";
-import EJS from "ejs";
 
+import EJS from "ejs";
 import { execa } from "execa";
 import { deepMerge } from "./utils";
 
@@ -75,25 +75,23 @@ export class NeomanEnvironment<
 
     await generator.run({
       options: generatorCtx,
-      copy: async (filePath: string, destinationPath: string) =>
-        await copy({
-          filePath,
-          destinationPath,
-          destinationRoot,
-          sourceRoot,
-        }),
+      copy: async (filePath: string, destinationPath: string) => await copy({
+        filePath,
+        destinationPath,
+        destinationRoot,
+        sourceRoot,
+      }),
       copyTpl: async (
         filePath: string,
         destinationPath: string,
         ctx: Record<string, unknown>,
-      ) =>
-        await copyTpl({
-          filePath,
-          destinationPath,
-          ctx: deepMerge(generatorCtx, ctx),
-          destinationRoot,
-          sourceRoot,
-        }),
+      ) => await copyTpl({
+        filePath,
+        destinationPath,
+        ctx: deepMerge(generatorCtx, ctx),
+        destinationRoot,
+        sourceRoot,
+      }),
       destinationPath: (...path: string[]) => {
         let destinationPath = join(...path);
         if (!isAbsolute(destinationPath)) {
@@ -109,14 +107,15 @@ export class NeomanEnvironment<
 
         return sourcePath;
       },
-      spawn: async (command: string, args: string[], opts?: SpawnOptions) =>
-        await spawn({
+      ejs: EJS,
+      spawn <TSpawnOptions extends SpawnOptions>(command: string, args: string[], opts?: TSpawnOptions): Promise<Result<TSpawnOptions>> {
+        return spawn({
           command,
           args,
           opts,
           destinationRoot,
-        }),
-      ejs: EJS,
+        });
+      },
     });
   }
 }
@@ -206,7 +205,7 @@ async function copyTpl({
   );
 }
 
-async function spawn({
+async function spawn<TSpawnOptions extends SpawnOptions>({
   command,
   args,
   opts,
@@ -214,12 +213,11 @@ async function spawn({
 }: {
   command: string;
   args: string[];
-  opts?: SpawnOptions;
+  opts?: TSpawnOptions;
   destinationRoot?: string;
-}): Promise<ExecaReturnValue<string>> {
+}): Promise<Result<TSpawnOptions>> {
   return execa(command, args, {
     cwd: destinationRoot,
-    stdio: "inherit",
     ...opts,
-  });
+  }) as unknown as Promise<Result<TSpawnOptions>>;
 }

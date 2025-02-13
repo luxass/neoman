@@ -1,5 +1,5 @@
 import type EJS from "ejs";
-import type { ExecaReturnValue, Options as SpawnOptions } from "execa";
+import type { Options as ExecaSpawnOptions, Result } from "execa";
 
 export interface NeomanGenerator<T extends Record<string, unknown> = Record<string, unknown>> {
   destinationRoot: string;
@@ -19,10 +19,16 @@ export interface RunOptions<T> {
   templatePath: (...path: string[]) => string;
   destinationPath: (...path: string[]) => string;
 
-  spawn: (
+  spawn: <TSpawnOptions extends SpawnOptions>(
     command: string,
     args: string[],
-    opts?: SpawnOptions
-  ) => Promise<ExecaReturnValue<string>>;
+    opts?: TSpawnOptions
+  ) => Promise<Result<TSpawnOptions>>;
+
   ejs: typeof EJS;
+}
+
+export interface SpawnOptions extends ExecaSpawnOptions {
+  cwd?: string;
+  stdio?: ExecaSpawnOptions["stdio"];
 }
