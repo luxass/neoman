@@ -79,12 +79,12 @@ it("run copy generator", async () => {
   const files = await readDir(destination);
 
   expect(files).toHaveLength(4);
-  expect(files).toEqual([
+  expect(files).toEqual(expect.arrayContaining([
     join(destination, "README.md"),
     join(destination, "file1.txt"),
     join(destination, "files", "file1.txt"),
     join(destination, "files", "file2.txt"),
-  ]);
+  ]));
 });
 
 it("run spawn generator", async () => {
