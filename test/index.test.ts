@@ -19,8 +19,8 @@ async function readDir(dir: string): Promise<string[]> {
 }
 
 afterAll(async () => {
-  await rmdir("./tests/fixtures/spawn-fixture", { recursive: true });
-  await rmdir("./tests/fixtures/copy-fixture", { recursive: true });
+  await rmdir("./test/fixtures/spawn-fixture", { recursive: true });
+  await rmdir("./test/fixtures/copy-fixture", { recursive: true });
 });
 
 it("should register a generator", () => {

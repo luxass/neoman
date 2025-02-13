@@ -6,8 +6,8 @@ export function CopyGenerator(): NeomanGenerator<{
   };
 }> {
   return {
-    sourceRoot: "./tests/fixtures",
-    destinationRoot: "./tests/fixtures/copy-fixture",
+    sourceRoot: "./test/fixtures",
+    destinationRoot: "./test/fixtures/copy-fixture",
     run: async (ctx) => {
       await ctx.copy(
         ctx.templatePath("file1.txt"),
