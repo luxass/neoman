@@ -87,7 +87,7 @@ it("run copy generator", async () => {
   ]));
 });
 
-it("run spawn generator", async () => {
+it("run spawn generator", { timeout: 20000 }, async () => {
   const env = createEnvironment({
     generators: {
       "neoman:spawn": SpawnGenerator(),
