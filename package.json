@@ -8,7 +8,7 @@
     "email": "lucasnrgaard@gmail.com",
     "url": "https://luxass.dev"
   },
-  "packageManager": "pnpm@10.4.1",
+  "packageManager": "pnpm@10.11.0",
   "license": "MIT",
   "homepage": "https://github.com/luxass/neoman",
   "repository": {
@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "ejs": "^3.1.10",
-    "execa": "9.5.2"
+    "execa": "9.5.3"
   },
   "devDependencies": {
     "@luxass/eslint-config": "^4.15.0",
