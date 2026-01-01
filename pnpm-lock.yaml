@@ -25,10 +25,10 @@ importers:
         specifier: 20.19.9
         version: 20.19.9
       eslint:
-        specifier: ^9.20.1
+        specifier: 9.28.0
         version: 9.28.0
       eslint-plugin-format:
-        specifier: ^1.0.1
+        specifier: 1.0.1
         version: 1.0.1(eslint@9.28.0)
       tsup:
         specifier: 8.5.0
