@@ -54,7 +54,7 @@
     "execa": "9.6.0"
   },
   "devDependencies": {
-    "@luxass/eslint-config": "4.19.0",
+    "@luxass/eslint-config": "6.0.3",
     "@types/ejs": "3.1.5",
     "@types/node": "20.19.9",
     "eslint": "9.28.0",
