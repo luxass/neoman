@@ -50,7 +50,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "ejs": "3.1.10",
+    "ejs": "7.0.2",
     "execa": "9.6.0"
   },
   "devDependencies": {
